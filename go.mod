@@ -1,4 +1,4 @@
-module github.com/denggj28/bun-adapter/v1
+module github.com/denggj28/bun-adapter
 
 go 1.20
 
