@@ -7,6 +7,7 @@ import (
 	"github.com/casbin/casbin/v2/model"
 	"github.com/casbin/casbin/v2/persist"
 	"github.com/uptrace/bun"
+	"github.com/uptrace/bun/driver/pgdriver"
 	"log"
 	"runtime"
 	"strings"
@@ -75,6 +76,11 @@ func NewAdapterContext(ctx context.Context, db *bun.DB, tableName ...string) (*A
 	// create table
 	err = a.createTable()
 	if err != nil {
+		if pgErr, ok := err.(pgdriver.Error); ok {
+			if pgErr.Field('C') == "42P07" {
+				err = fmt.Errorf("%w\nmaybe anthoer casbin table exists, postgresql is not support yet", err)
+			}
+		}
 		return nil, err
 	}
 
