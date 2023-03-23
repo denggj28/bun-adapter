@@ -72,6 +72,12 @@ func NewAdapterContext(ctx context.Context, db *bun.DB, tableName ...string) (*A
 		return nil, err
 	}
 
+	// create table
+	err = a.createTable()
+	if err != nil {
+		return nil, err
+	}
+
 	runtime.SetFinalizer(a, finalizer)
 
 	return a, nil
