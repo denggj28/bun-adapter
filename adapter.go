@@ -78,7 +78,7 @@ func NewAdapterContext(ctx context.Context, db *bun.DB, tableName ...string) (*A
 	if err != nil {
 		if pgErr, ok := err.(pgdriver.Error); ok {
 			if pgErr.Field('C') == "42P07" {
-				err = fmt.Errorf("%w\nmaybe anthoer casbin table exists, postgresql is not support yet", err)
+				err = fmt.Errorf("%w\nmaybe anthoer casbin table exists, postgresql is not supported yet", err)
 			}
 		}
 		return nil, err
