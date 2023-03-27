@@ -514,7 +514,7 @@ func (a *Adapter) UpdateFilteredPolicies(
 
 		deleteQuery := tx.NewDelete().Model(&oldR)
 		if a.tableName != "" {
-			deleteQuery = deleteQuery.ModelTableExpr(a.tableName)
+			deleteQuery = deleteQuery.ModelTableExpr(fmt.Sprintf("%s AS r", a.tableName))
 		}
 		_, errTx = deleteQuery.WherePK().Exec(ctx)
 		if errTx != nil {
